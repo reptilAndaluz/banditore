@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Comentario', function (Blueprint $table) {
+        Schema::create('comentario', function (Blueprint $table) {
             $table->id();
             $table->foreignId('noticia_id');
             $table->text('mensaje');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Comentario');
+        Schema::dropIfExists('comentario');
     }
 };
