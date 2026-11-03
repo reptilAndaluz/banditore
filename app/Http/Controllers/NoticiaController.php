@@ -55,9 +55,17 @@ class NoticiaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string|Noticia $id): View
     {
-        //
+        $noticia = $id instanceof Noticia ? $id : Noticia::findOrFail($id);
+        $noticia->load('comentarios');
+
+        $otrasNoticias = Noticia::where('id', '!=', $noticia->id)
+            ->orderBy('created_at', 'desc')
+            ->take(4)
+            ->get();
+
+        return view('noticia.show', compact('noticia', 'otrasNoticias'));
     }
 
     /**
