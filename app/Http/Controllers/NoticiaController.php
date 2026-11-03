@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comentario;
+use App\Models\Noticia;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class NoticiaController extends Controller
 {
@@ -18,12 +21,19 @@ class NoticiaController extends Controller
         'titulo.max' => 'El título no puede superar los 200 caracteres.',
         'archivo_md.mimes' => 'El archivo adjunto debe ser de tipo .md o .txt.',
     ];
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        $noticias = Noticia::withCount('comentarios')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        $totalComentarios = Comentario::count();
+
+        return view('noticia.index', compact('noticias', 'totalComentarios'));
     }
 
     /**
