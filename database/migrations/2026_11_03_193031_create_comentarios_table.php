@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('valoracion', ['pos', 'neg']);
             $table->timestamps();
 
-            // Integridad referencial: no se puede borrar noticia si tiene comentarios
+            // no se puede borrar noticia si tiene comentarios
             $table->foreign('noticia_id')->references('id')->on('noticia')->onDelete('restrict');
         });
     }
